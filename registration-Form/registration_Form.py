@@ -6,7 +6,7 @@
 #
 # Created:     09/11/2022
 # Copyright:   (c) arthur 2022
-# Licence:     <your licence>
+# Licence:     < UNLICENSED >
 #-------------------------------------------------------------------------------
 
 from openpyxl import *
