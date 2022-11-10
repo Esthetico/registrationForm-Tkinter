@@ -16,7 +16,7 @@ from tkinter import messagebox as mb
 # Global declaration of wb and sheet variable
 # Proving absolute path of excel file from which
 # to read and write data
-wb = load_workbook(r'/home/mr_unicorn/Documents/School/registration_Data.xlsx')
+wb = load_workbook('Add direct path to your xlsx file')
 
 # Create sheet object
 sheet = wb.active
@@ -101,7 +101,7 @@ def insert():
             sheet.cell(row=current_row + 1, column=7).value = address_field.get()
 
             # Save file with new content
-            wb.save(r'/home/mr_unicorn/Documents/School/registration_Data.xlsx')
+            wb.save(' same path as before to the xlsx file')
 
             # Return focus on the name_field
             name_field.focus_set()
