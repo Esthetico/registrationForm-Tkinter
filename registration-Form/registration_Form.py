@@ -109,7 +109,10 @@ def insert():
         # Clear the form
         clear()
 
-def customize():        
+def customize():
+    '''
+    Implements the switching functionality between Dark and Light theme    
+    ''''
     global theme_mode
     global dark
     global white
