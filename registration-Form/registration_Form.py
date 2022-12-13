@@ -8,15 +8,19 @@
 # Copyright:   (c) arthur 2022
 # Licence:     < UNLICENSED >
 #-------------------------------------------------------------------------------
-
 from openpyxl import *
 from tkinter import *
-from tkinter import messagebox as mb
+
+# Global variables
+theme_mode = True
+dark = '#26242f'
+white = '#c0c4c1'
+textFg = '#42f557'
 
 # Global declaration of wb and sheet variable
 # Proving absolute path of excel file from which
 # to read and write data
-wb = load_workbook('Add direct path to your xlsx file')
+wb = load_workbook(r'/home/mr_unicorn/Documents/School/registration_Data.xlsx')
 
 # Create sheet object
 sheet = wb.active
@@ -73,66 +77,91 @@ def clear():
 
 # function get data from GUI and write to Excel Spreadsheet
 def insert():
-    
-    # Ask whether the user is sure about submitting registration
-    res = mb.askquestion('Submit Registration', 'Are you sure?')
-    if res == 'yes':
-        # if the entry field are left empty, then print 'empty input'
-        # else, save the data entered by the user to the spreadsheet
-        if (name_field.get() == '' and course_field.get()==''
-            and sem_field.get() == '' and form_no_field.get()==''
-            and contact_no_field.get() == '' and email_id_field.get()==''
-            and address_field.get() == ''):
-            print('Empty input')
+    # if the entry field are left empty, then print 'empty input'
+    # else, save the data entered by the user to the spreadsheet
+    if (name_field.get() == '' and course_field.get()==''
+    and sem_field.get() == '' and form_no_field.get()==''
+    and contact_no_field.get() == '' and email_id_field.get()==''
+    and address_field.get() == ''):
+        print('Empty input')
 
-        else:
-            #assigning max_row and max_column values to variables
-            current_row = sheet.max_row
-            current_column = sheet.max_column
-
-            # get() method returns data entered as string to
-            # write at the right location in the spreadsheet
-            sheet.cell(row=current_row + 1, column=1).value = name_field.get()
-            sheet.cell(row=current_row + 1, column= 2). value = course_field.get()
-            sheet.cell(row=current_row + 1, column=3).value = sem_field.get()
-            sheet.cell(row=current_row + 1, column=4).value = form_no_field.get()
-            sheet.cell(row=current_row + 1, column=5).value = contact_no_field.get()
-            sheet.cell(row=current_row + 1, column=6).value = email_id_field.get()
-            sheet.cell(row=current_row + 1, column=7).value = address_field.get()
-
-            # Save file with new content
-            wb.save(' same path as before to the xlsx file')
-
-            # Return focus on the name_field
-            name_field.focus_set()
-
-            # Clear the form
-            clear() 
-    
     else:
-        mb.showinfo('Return', 'Returning to main application')   
-    
+        #assigning max_row and max_column values to variables
+        current_row = sheet.max_row
+        current_column = sheet.max_column
 
+        # get() method returns data entered as string to
+        # write at the right location in the spreadsheet
+        sheet.cell(row=current_row + 1, column=1).value = name_field.get()
+        sheet.cell(row=current_row + 1, column= 2). value = course_field.get()
+        sheet.cell(row=current_row + 1, column=3).value = sem_field.get()
+        sheet.cell(row=current_row + 1, column=4).value = form_no_field.get()
+        sheet.cell(row=current_row + 1, column=5).value = contact_no_field.get()
+        sheet.cell(row=current_row + 1, column=6).value = email_id_field.get()
+        sheet.cell(row=current_row + 1, column=7).value = address_field.get()
+
+        # Save file with new content
+        wb.save(r'/home/mr_unicorn/Documents/School/registration_Data.xlsx')
+
+        # Return focus on the name_field
+        name_field.focus_set()
+
+        # Clear the form
+        clear()
+
+def customize():        
+    global theme_mode
+    global dark
+    global white
+    global textFg
+
+    if theme_mode:
+        theme.configure(text= 'Dark', fg= dark, bg= white, activebackground= 'dark grey')
+        register.configure(fg= dark, bg= white)
+        root.configure(background= white)
+        heading.configure(bg = white, fg= dark)
+        name.configure(bg = white, fg = dark)
+        course.configure(bg = white, fg= dark)
+        sem.configure(bg = white, fg= dark)
+        form_no.configure(bg = white, fg= dark)
+        contact_no.configure(bg = white, fg= dark)
+        email_id.configure(bg = white, fg= dark)
+        address.configure(bg = white, fg= dark)
+        theme_mode = False
+
+    else:
+        theme.configure(text= 'Light', fg= white, bg= dark)
+        register.configure(fg= textFg, bg= dark)
+        root.configure(background= dark)
+        heading.configure(bg = dark, fg= textFg)
+        name.configure(bg = dark, fg= textFg)
+        course.configure(bg = dark, fg= textFg)
+        sem.configure(bg = dark, fg= textFg)
+        form_no.configure(bg = dark, fg= textFg)
+        contact_no.configure(bg = dark, fg= textFg)
+        email_id.configure(bg = dark, fg= textFg)
+        address.configure(bg = dark, fg= textFg)
+        theme_mode = True
 
 # Driver Code containing the mainloop for tkinter window
 if __name__== '__main__':
 
     # GUI main window
     root = Tk(className='Registration Form')
-    root.configure(background= 'black')  
-    root.geometry('600x300')
-    
+    root.configure(background= dark)
+    root.geometry('550x350')
+
     excel()
 
     # Labels for different entry fields
-    heading = Label(root, text = 'Form', bg = 'black', fg='light green')
-    name = Label(root, text = 'Name', bg = 'black', fg='light green')
-    course = Label(root, text = 'Course', bg = 'black', fg= 'light green')
-    sem = Label(root, text = 'Semester', bg = 'black', fg='light green')
-    form_no = Label(root, text = 'Form No.', bg = 'black', fg='light green')
-    contact_no = Label(root, text ='Contact No.', bg = 'black', fg='light green')
-    email_id = Label(root, text= 'Email id', bg = 'black', fg='light green')
-    address = Label(root, text ='Address', bg = 'black', fg='light green')
+    heading = Label(root, text = 'Form', bg = dark, fg=textFg)
+    name = Label(root, text = 'Name', bg = dark, fg=textFg)
+    course = Label(root, text = 'Course', bg = dark, fg= textFg)
+    sem = Label(root, text = 'Semester', bg = dark, fg=textFg)
+    form_no = Label(root, text = 'Form No.', bg = dark, fg=textFg)
+    contact_no = Label(root, text ='Contact No.', bg = dark, fg=textFg)
+    email_id = Label(root, text= 'Email id', bg = dark, fg=textFg)
+    address = Label(root, text ='Address', bg = dark, fg=textFg)
 
 
     # placing widgets using grid()
@@ -177,12 +206,19 @@ if __name__== '__main__':
     excel()
 
     # Register button for the Form
-    register = Button(root, text= 'Register', fg='green',
-    bg='light gray', command=insert)
+    register = Button(root, text= 'Register', fg= textFg,
+    bg= dark, command=insert)
     register.grid(row=8, column=1)
+    register.grid_configure(pady= 8)
+
+    # Changing form theme
+    theme = Button(root, text= 'Light', fg = white, bg= dark,
+    activebackground = white ,command=customize)
+    theme.config(anchor='sw')
+    theme.place(x = 460, y= 270)
 
 
-    # running main loop
+    # running the mainloop
     root.mainloop()
 
 
